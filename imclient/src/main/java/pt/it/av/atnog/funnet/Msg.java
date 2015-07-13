@@ -1,4 +1,4 @@
-package pt.it.av.atnog;
+package pt.it.av.atnog.funnet;
 
 import pt.it.av.atnog.utils.json.JSONObject;
 

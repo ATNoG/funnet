@@ -17,3 +17,6 @@ hs_err_pid*
 
 # Vim temp files
 *~
+
+# Java properties files
+*.properties
