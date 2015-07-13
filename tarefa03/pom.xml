@@ -8,9 +8,9 @@
     <version>0.1</version>
     <dependencies>
         <dependency>
-            <groupId>pt.it.av.atnog</groupId>
-            <artifactId>utils</artifactId>
-            <version>1.1</version>
+            <groupId>pt.it.av.atnog.funnet</groupId>
+            <artifactId>imclient</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>
