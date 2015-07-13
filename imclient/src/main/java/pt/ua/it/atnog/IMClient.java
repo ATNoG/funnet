@@ -1,22 +1,22 @@
 package pt.ua.it.atnog;
 
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
+import pt.it.av.atnog.utils.HTTP;
+import pt.it.av.atnog.utils.json.JSONArray;
+import pt.it.av.atnog.utils.json.JSONObject;
+import pt.it.av.atnog.utils.json.JSONValue;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.eclipsesource.json.JsonValue;
-import pt.ua.it.atnog.http.HTTP;
-
 public class IMClient implements Runnable, Closeable {
     private static final int DEFAULT_RATE = 1;
-    private static final String DEFAULT_URL="http://funnet.aws.atnog.av.it.pt:8080";
+    private static final String DEFAULT_URL = "http://twoflower.ddns.net";
     private static final int DEFAULT_MAX_SIZE = 10;
     private final ScheduledThreadPoolExecutor s;
     private final String user, url;
@@ -30,8 +30,7 @@ public class IMClient implements Runnable, Closeable {
         this(user, DEFAULT_URL, DEFAULT_RATE, DEFAULT_MAX_SIZE);
     }
 
-    public IMClient(String user, String url, int rate, int maxSize)
-    {
+    public IMClient(String user, String url, int rate, int maxSize) {
         this.user = user;
         this.url = url;
         this.rate = rate;
@@ -48,7 +47,7 @@ public class IMClient implements Runnable, Closeable {
     }
 
     public void send(String txt) {
-        if(!txt.isEmpty()) {
+        if (!txt.isEmpty()) {
             out.lock();
             bufferOut.in(txt);
             out.unlock();
@@ -59,7 +58,7 @@ public class IMClient implements Runnable, Closeable {
         List<Msg> rv = null;
 
         in.lock();
-        if(bufferIn.size() > 0) {
+        if (bufferIn.size() > 0) {
             rv = new ArrayList<Msg>(bufferIn);
             bufferIn.clear();
         } else {
@@ -70,22 +69,22 @@ public class IMClient implements Runnable, Closeable {
         return rv;
     }
 
-    private JsonObject buffer2JSON() {
-        JsonObject json = new JsonObject();
-        json.set("user", user);
-        JsonArray array = new JsonArray();
-        for(String txt : bufferOut)
+    private JSONObject buffer2JSON() {
+        JSONObject json = new JSONObject();
+        json.add("user", user);
+        JSONArray array = new JSONArray();
+        for (String txt : bufferOut)
             array.add(txt);
-        json.set("msgs", array);
+        json.add("msgs", array);
         return json;
     }
 
     public void run() {
         out.lock();
         if (bufferOut.size() > 0) {
-            JsonObject data = buffer2JSON();
+            JSONObject data = buffer2JSON();
             try {
-                HTTP.post(url + "/im/send/", "application/json", data.toString());
+                HTTP.post(url + "/im/send/", data);
                 bufferOut.clear();
             } catch (IOException e) {
                 // If HTTP Post fail, do no clean the outgoing buffer
@@ -94,19 +93,18 @@ public class IMClient implements Runnable, Closeable {
         }
         out.unlock();
 
-        JsonArray array = null;
+        JSONArray array = null;
         try {
-            JsonObject json = JsonObject.readFrom(HTTP.get(url + "/im/recv/" + id));
+            JSONObject json = JSONObject.read(HTTP.get(url + "/im/recv/" + id));
             array = json.get("msgs").asArray();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         if (array != null) {
             in.lock();
-            for (JsonValue value : array) {
-                JsonObject obj = value.asObject();
+            for (JSONValue value : array) {
+                JSONObject obj = value.asObject();
                 bufferIn.add(new Msg(obj.get("user").asString(), obj.get("txt").asString(), obj.get("id").asInt()));
             }
             if (bufferIn.size() > 0)
@@ -117,6 +115,6 @@ public class IMClient implements Runnable, Closeable {
 
     public void close() throws IOException {
         s.shutdown();
-        while(!s.isTerminated());
+        while (!s.isTerminated()) ;
     }
 }

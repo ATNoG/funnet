@@ -1,6 +1,6 @@
 package pt.ua.it.atnog;
 
-import com.eclipsesource.json.JsonObject;
+import pt.it.av.atnog.utils.json.JSONObject;
 
 public class Msg {
     private final String user, txt;
@@ -12,7 +12,7 @@ public class Msg {
         this.id = id;
     }
 
-    public Msg(JsonObject json) {
+    public Msg(JSONObject json) {
         user = json.get("user").asString();
         txt = json.get("txt").asString();
         id = json.get("id").asInt();
