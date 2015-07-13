@@ -1,4 +1,4 @@
-package pt.ua.it.atnog;
+package pt.it.av.atnog;
 
 import pt.it.av.atnog.utils.HTTP;
 import pt.it.av.atnog.utils.json.JSONArray;

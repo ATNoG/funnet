@@ -1,8 +1,8 @@
-package pt.ua.it.atnog;
+package pt.it.av.atnog;
 
 import java.util.Iterator;
 
-public class CircularArray<E> implements Iterable<E>{
+public class CircularArray<E> implements Iterable<E> {
     private final E array[];
     private int start = 0, size = 0;
 
@@ -12,7 +12,7 @@ public class CircularArray<E> implements Iterable<E>{
 
     public void in(E object) {
         int idx = 0;
-        if(size == array.length) {
+        if (size == array.length) {
             idx = start;
             start = (start + 1) % array.length;
         } else {
@@ -25,7 +25,7 @@ public class CircularArray<E> implements Iterable<E>{
     public E out() {
         E rv = null;
 
-        if(!isEmpty()) {
+        if (!isEmpty()) {
             rv = array[start];
             start = (start + 1) % array.length;
             size--;
@@ -61,11 +61,12 @@ public class CircularArray<E> implements Iterable<E>{
         public boolean hasNext() {
             return count < size;
         }
+
         public E next() {
             E rv = null;
-            if(hasNext()) {
+            if (hasNext()) {
                 rv = array[idx];
-                idx = (idx+1) % array.length;
+                idx = (idx + 1) % array.length;
                 count++;
             }
             return rv;

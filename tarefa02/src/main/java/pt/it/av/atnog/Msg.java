@@ -1,4 +1,4 @@
-package pt.ua.it.atnog;
+package pt.it.av.atnog;
 
 import pt.it.av.atnog.utils.json.JSONObject;
 
@@ -22,7 +22,7 @@ public class Msg {
         return user;
     }
 
-    public String txt(){
+    public String txt() {
         return txt;
     }
 
