@@ -1,6 +1,6 @@
-package pt.it.av.atnog.funnet;
+package pt.it.av.atnog.funnetlib;
 
-import pt.it.av.atnog.utils.json.JSONObject;
+import pt.it.av.atnog.funnetlib.json.JSONObject;
 
 public class Msg {
     private final String user, txt;

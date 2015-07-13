@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">tarefa04</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_redes_divertidas">FunNet</string>
+    <string name="edit_message">Escreve uma messagem</string>
+    <string name="button_send">Enviar</string>
+    <string name="button_change">Ver Mensagens</string>
+    <string name="button_center">Localização Actual</string>
+</resources>

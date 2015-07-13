@@ -1,4 +1,4 @@
-package pt.it.av.atnog.funnet;
+package pt.it.av.atnog.funnetlib;
 
 import java.util.Iterator;
 

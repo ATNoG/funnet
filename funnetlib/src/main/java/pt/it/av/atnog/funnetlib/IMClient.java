@@ -1,9 +1,10 @@
-package pt.it.av.atnog.funnet;
+package pt.it.av.atnog.funnetlib;
 
-import pt.it.av.atnog.utils.HTTP;
-import pt.it.av.atnog.utils.json.JSONArray;
-import pt.it.av.atnog.utils.json.JSONObject;
-import pt.it.av.atnog.utils.json.JSONValue;
+
+
+import pt.it.av.atnog.funnetlib.json.JSONArray;
+import pt.it.av.atnog.funnetlib.json.JSONObject;
+import pt.it.av.atnog.funnetlib.json.JSONValue;
 
 import java.io.Closeable;
 import java.io.IOException;
