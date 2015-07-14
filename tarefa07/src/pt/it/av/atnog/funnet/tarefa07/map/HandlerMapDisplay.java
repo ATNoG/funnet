@@ -42,7 +42,11 @@ public class HandlerMapDisplay extends Handler {
             markers.clear();
             List<UsersDB.User> users = db.getUsers();
             for (UsersDB.User user : users) {
-                markers.add(map.addMarker(new MarkerOptions().position(user.latlng).title(user.name).icon(BitmapDescriptorFactory.fromBitmap(user.icon))));
+                try {
+                    markers.add(map.addMarker(new MarkerOptions().position(user.latlng).title(user.name).icon(BitmapDescriptorFactory.fromBitmap(user.icon))));
+                }catch (Exception e) {
+                    System.err.println("ERROR");
+                }
             }
         }
     }
