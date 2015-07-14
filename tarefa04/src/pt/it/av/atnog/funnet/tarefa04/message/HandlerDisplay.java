@@ -19,16 +19,11 @@ public class HandlerDisplay extends Handler {
     }
 
     public void handleMessage(Message msg) {
-        List<Msg> msgs = im.recv();
-        for(Msg m : msgs)
-            display.print(m);
+        
     }
 
     public void receiveMessage(EditText text)
     {
-        if (text.getText().toString().length() != 0) {
-            im.send(text.getText().toString());
-            text.setText("");
-        }
+        
     }
 }
