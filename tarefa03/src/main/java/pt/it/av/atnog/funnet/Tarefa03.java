@@ -1,5 +1,8 @@
 package pt.it.av.atnog.funnet;
 
+import pt.it.av.atnog.funnetlib.IMClient;
+import pt.it.av.atnog.funnetlib.Msg;
+
 import java.util.List;
 import java.util.Scanner;
 

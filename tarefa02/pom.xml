@@ -8,8 +8,8 @@
     <version>0.1</version>
     <dependencies>
         <dependency>
-            <groupId>pt.it.av.atnog.funnet</groupId>
-            <artifactId>imclient</artifactId>
+            <groupId>pt.it.av.atnog</groupId>
+            <artifactId>funnetlib</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>
