@@ -13,8 +13,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.Window;
 
+//TODO: BITMAP to BASE64 is not working anymore
 public class Tarefa07 extends FragmentActivity {
-    private final String teamName = "funnet"; // Atenção, o nome não pode ter espaços
+    private final String teamName = "mantunes"; // Atenção, o nome não pode ter espaços
     private final int icon = R.drawable.marker; // Nome do icon
 
     private MapsFragment map;

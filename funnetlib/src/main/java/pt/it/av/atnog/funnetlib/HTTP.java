@@ -4,6 +4,7 @@ import pt.it.av.atnog.funnetlib.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Base64;
 import java.util.zip.GZIPInputStream;
@@ -53,6 +54,7 @@ public class HTTP {
             con.setReadTimeout(timeout);
             con.setRequestMethod("GET");
             con.setRequestProperty("Content-Type", "text/plain");
+            con.setRequestProperty("charset", "utf-8");
             con.setRequestProperty("Accept-Encoding", "gzip, deflate");
             con.setRequestProperty("User-Agent", "");
             con.connect();
@@ -85,8 +87,8 @@ public class HTTP {
             con.setReadTimeout(timeout);
             con.setRequestMethod("GET");
             con.setRequestProperty("Content-Type", "text/plain");
-            con.setRequestProperty("Authorization", "Basic " +
-                    Base64.getEncoder().encodeToString((user + ":" + pass).getBytes()));
+            con.setRequestProperty("charset", "utf-8");
+            con.setRequestProperty("Authorization", "Basic " + Base64.getEncoder().encodeToString((user + ":" + pass).getBytes()));
             con.setRequestProperty("Accept-Encoding", "gzip, deflate");
             con.setRequestProperty("User-Agent", "");
             con.connect();
@@ -144,6 +146,7 @@ public class HTTP {
             con.setReadTimeout(timeout);
             con.setRequestMethod("GET");
             con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("charset", "utf-8");
             con.setRequestProperty("Authorization", "Basic " +
                     Base64.getEncoder().encodeToString((user + ":" + pass).getBytes()));
             con.setRequestProperty("Accept-Encoding", "gzip, deflate");
@@ -159,6 +162,38 @@ public class HTTP {
     }
 
     //TODO: this method needs some love, like all the persons in the world...
+    public static void post(String url, String data) throws IOException {
+        post(url, data, TIMEOUT);
+    }
+
+    public static void post(String url, String data, int timeout) throws IOException {
+        byte[] buffer = data.getBytes("UTF-8");
+        HttpURLConnection con = null;
+        try {
+            con = (HttpURLConnection) new URL(url).openConnection();
+            con.setReadTimeout(timeout);
+            con.setReadTimeout(timeout);
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("charset", "utf-8");
+            con.setRequestProperty("Accept-Encoding", "gzip, deflate");
+            con.setRequestProperty("Content-Length", Integer.toString(buffer.length));
+            con.setRequestProperty("User-Agent", "");
+            con.setDoOutput(true);
+            try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+                wr.write(buffer);
+                wr.flush();
+            }
+            if (con.getResponseCode() == HttpURLConnection.HTTP_OK)
+                JSONObject.read(new BufferedReader(new InputStreamReader(inputStream(con))));
+            else
+                throw new IOException("Error code: " + con.getResponseCode());
+        } finally {
+            if (con != null)
+                con.disconnect();
+        }
+    }
+
     public static void post(String url, JSONObject json) throws IOException {
         post(url, json, TIMEOUT);
     }

@@ -71,6 +71,10 @@ public class MapsFragment extends Fragment {
             Options.EEInicialization(map);
             // Location database
             db = new UsersDB(nome, BitmapFactory.decodeResource(getResources(), icon));
+
+            //String temp = UsersDB.bitmap2Base64(BitmapFactory.decodeResource(getResources(), R.drawable.pinkiepie));
+            //System.err.println("TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //UsersDB.base642Bitmap(temp, null);
             this.locationBehavior = new LocationBehavior((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), db);
             markerHandler = new HandlerMapDisplay(map, db, nome);
             timer = new Timer();
